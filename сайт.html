@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нязепетровский Контур – Главные новости города</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a; /* Темно-синий */
+            --secondary-color: #d97706; /* Оранжево-коричневый */
+            --accent-color: #065f46; /* Темно-зеленый */
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --dark-gray: #757575;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .logo-icon {
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .date {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        nav ul li {
+            margin-right: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/random/1200x400/?ural,mountains') center/cover;
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .main-news {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .featured-article {
+            position: relative;
+        }
+        
+        .featured-article img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .article-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .article-content h2 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-content a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .secondary-articles {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .secondary-article {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .secondary-article img {
+            width: 120px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .secondary-article h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .secondary-article a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+        
+        .secondary-article a:hover {
+            color: var(--primary-color);
+        }
+        
+        .news-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .section-title h2 {
+            color: var(--primary-color);
+            margin-right: 1rem;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .news-card {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: white;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .news-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1rem;
+        }
+        
+        .card-content h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-content p {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .card-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .subscribe-form {
+            display: flex;
+            margin-top: 1rem;
+        }
+        
+        .subscribe-form input {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            width: 70%;
+        }
+        
+        .subscribe-form button {
+            padding: 0.5rem 1rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .local-attractions {
+            background-color: var(--light-gray);
+            padding: 2rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+        
+        .weather-widget {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .date {
+                margin-top: 0.5rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin-bottom: 0.5rem;
+            }
+            
+            .main-news {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-article img {
+                height: 300px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">📰</span>
+                    Нязепетровский <span>Контур</span>
+                </a>
+                <div class="date">Среда, 18 июня 2025</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Новости</a></li>
+                    <li><a href="#">Экономика</a></li>
+                    <li><a href="#">Общество</a></li>
+                    <li><a href="#">Культура</a></li>
+                    <li><a href="#">Спорт</a></li>
+                    <li><a href="#">Происшествия</a></li>
+                    <li><a href="#">Афиша</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Нязепетровск в фокусе событий</h1>
+            <p>Самые важные новости, аналитика и репортажи из жизни города. Оставайтесь в курсе вместе с "Нязепетровским Контуром".</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <div class="weather-widget">
+            <h3>Погода в Нязепетровске</h3>
+            <p>Сегодня: +22°C, ясно</p>
+            <p>Завтра: +18°C, возможен дождь</p>
+        </div>
+        
+        <section class="main-news">
+            <article class="featured-article">
+                <img src="https://source.unsplash.com/random/800x400/?factory,ural" alt="Главная новость">
+                <div class="article-content">
+                    <h2><a href="#">Нязепетровский завод увеличил производство на 30%</a></h2>
+                    <p>Предприятие заключило контракты с новыми поставщиками и планирует расширение штата.</p>
+                </div>
+            </article>
+            
+            <div class="secondary-articles">
+                <article class="secondary-article">
+                    <img src="https://source.unsplash.com/random/300x200/?school,ural" alt="Новость 1">
+                    <div>
+                        <h3><a href="#">В школе №1 завершился ремонт спортивного зала</a></h3>
+                        <p>На обновление выделено 3,5 млн рублей из федерального бюджета.</p>
+                    </div>
+                </article>
+                
+                <article class="secondary-article">
+                    <img src="https://source.unsplash.com/random/300x200/?bridge,ural" alt="Новость 2">
+                    <div>
+                        <h3><a href="#">В центре города начался ремонт дорожного покрытия</a></h3>
+                        <p>Работы продлятся до конца июля и затронут улицы Ленина и Советскую.</p>
+                    </div>
+                </article>
+                
+                <article class="secondary-article">
+                    <img src="https://source.unsplash.com/random/300x200/?festival,ural" alt="Новость 3">
+                    <div>
+                        <h3><a href="#">Фестиваль народных промыслов собрал более 1000 гостей</a></h3>
+                        <p>Мастера со всего Урала представили свои работы на центральной площади.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+        
+        <section class="local-attractions">
+            <h2>Знаете ли вы?</h2>
+            <p>Нязепетровск расположен в живописном месте у слияния рек Нязя и Уфа. Город окружен лесами и горами, что делает его привлекательным для туристов и любителей природы.</p>
+        </section>
+        
+        <section class="news-section">
+            <div class="section-title">
+                <h2>Последние новости</h2>
+                <a href="#">Все новости →</a>
+            </div>
+            
+            <div class="news-grid">
+                <article class="news-card">
+                    <img src="https://source.unsplash.com/random/400x300/?hospital,ural" alt="Новость">
+                    <div class="card-content">
+                        <span class="category-tag">Здравоохранение</span>
+                        <h3><a href="#">В городскую больницу поступило новое оборудование</a></h3>
+                        <p>Теперь диагностика заболеваний будет проводиться быстрее и точнее.</p>
+                        <a href="#">Читать далее</a>
+                    </div>
+                </article>
+                
+                <article class="news-card">
+                    <img src="https://source.unsplash.com/random/400x300/?sport,ural" alt="Новость">
+                    <div class="card-content">
+                        <span class="category-tag">Спорт</span>
+                        <h3><a href="#">Нязепетровские лыжники взяли золото на областных соревнованиях</a></h3>
+                        <p>Команда из 5 человек показала лучший результат за последние 10 лет.</p>
+                        <a href="#">Читать далее</a>
+                    </div>
+                </article>
+                
+                <article class="news-card">
+                    <img src="https://source.unsplash.com/random/400x300/?construction,ural" alt="Новость">
+                    <div class="card-content">
+                        <span class="category-tag">Строительство</span>
+                        <h3><a href="#">В городе началось строительство нового детского сада</a></h3>
+                        <p>Учреждение рассчитано на 150 мест и откроется в следующем году.</p>
+                        <a href="#">Читать далее</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+        
+        <section class="news-section">
+            <div class="section-title">
+                <h2>Культура и события</h2>
+                <a href="#">Все события →</a>
+            </div>
+            
+            <div class="news-grid">
+                <article class="news-card">
+                    <img src="https://source.unsplash.com/random/400x300/?museum,ural" alt="Событие">
+                    <div class="card-content">
+                        <span class="category-tag">Выставка</span>
+                        <h3><a href="#">В краеведческом музее открылась экспозиция "История Нязепетровска"</a></h3>
+                        <p>Посетители увидят уникальные архивные фотографии и документы.</p>
+                        <a href="#">Читать далее</a>
+                    </div>
+                </article>
+                
+                <article class="news-card">
+                    <img src="https://source.unsplash.com/random/400x300/?theater,ural" alt="Событие">
+                    <div class="card-content">
+                        <span class="category-tag">Театр</span>
+                        <h3><a href="#">Драмтеатр готовит премьеру спектакля по мотивам уральских сказов</a></h3>
+                        <p>Показ состоится в рамках празднования Дня города.</p>
+                        <a href="#">Читать далее</a>
+                    </div>
+                </article>
+                
+                <article class="news-card">
+                    <img src="https://source.unsplash.com/random/400x300/?library,ural" alt="Событие">
+                    <div class="card-content">
+                        <span class="category-tag">Образование</span>
+                        <h3><a href="#">Центральная библиотека объявляет конкурс юных чтецов</a></h3>
+                        <p>Участники будут соревноваться в чтении произведений уральских авторов.</p>
+                        <a href="#">Читать далее</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О газете</h3>
+                    <ul>
+                        <li><a href="#">Редакция</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">История</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Рубрики</h3>
+                    <ul>
+                        <li><a href="#">Новости</a></li>
+                        <li><a href="#">Интервью</a></li>
+                        <li><a href="#">Репортажи</a></li>
+                        <li><a href="#">Объявления</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Полезное</h3>
+                    <ul>
+                        <li><a href="#">Телефоны экстренных служб</a></li>
+                        <li><a href="#">Расписание транспорта</a></li>
+                        <li><a href="#">Афиша мероприятий</a></li>
+                        <li><a href="#">Карта города</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Свяжитесь с нами</h3>
+                    <p>г. Нязепетровск, ул. Ленина, 15</p>
+                    <p>Телефон: (35156) 2-12-34</p>
+                    <p>Email: info@nyazkontur.ru</p>
+                    <form class="subscribe-form">
+                        <input type="email" placeholder="Ваш email">
+                        <button type="submit">Подписаться</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2025 "Нязепетровский Контур". Все права защищены.<br>
+                При использовании материалов ссылка на издание обязательна.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
